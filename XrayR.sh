@@ -11,17 +11,17 @@ plain='\033[0m'
 # check os
 if [[ -f /etc/redhat-release ]]; then
     release="centos"
-elif cat /etc/issue | grep -Eqi "debian"; then
+    elif cat /etc/issue | grep -Eqi "debian"; then
     release="debian"
-elif cat /etc/issue | grep -Eqi "ubuntu"; then
+    elif cat /etc/issue | grep -Eqi "ubuntu"; then
     release="ubuntu"
-elif cat /etc/issue | grep -Eqi "centos|red hat|redhat|rocky|alma|oracle linux"; then
+    elif cat /etc/issue | grep -Eqi "centos|red hat|redhat|rocky|alma|oracle linux"; then
     release="centos"
-elif cat /proc/version | grep -Eqi "debian"; then
+    elif cat /proc/version | grep -Eqi "debian"; then
     release="debian"
-elif cat /proc/version | grep -Eqi "ubuntu"; then
+    elif cat /proc/version | grep -Eqi "ubuntu"; then
     release="ubuntu"
-elif cat /proc/version | grep -Eqi "centos|red hat|redhat|rocky|alma|oracle linux"; then
+    elif cat /proc/version | grep -Eqi "centos|red hat|redhat|rocky|alma|oracle linux"; then
     release="centos"
 else
     echo -e "${red}未检测到系统版本，请联系脚本作者！${plain}\n" && exit 1
@@ -39,11 +39,11 @@ if [[ x"${release}" == x"centos" ]]; then
     if [[ ${os_version} -le 6 ]]; then
         echo -e "${red}请使用 CentOS 7 或更高版本的系统！${plain}\n" && exit 1
     fi
-elif [[ x"${release}" == x"ubuntu" ]]; then
+    elif [[ x"${release}" == x"ubuntu" ]]; then
     if [[ ${os_version} -lt 16 ]]; then
         echo -e "${red}请使用 Ubuntu 16 或更高版本的系统！${plain}\n" && exit 1
     fi
-elif [[ x"${release}" == x"debian" ]]; then
+    elif [[ x"${release}" == x"debian" ]]; then
     if [[ ${os_version} -lt 8 ]]; then
         echo -e "${red}请使用 Debian 8 或更高版本的系统！${plain}\n" && exit 1
     fi
@@ -101,7 +101,7 @@ update() {
         echo -e "${green}更新完成，已自动重启 XrayR，请使用 XrayR log 查看运行日志${plain}"
         exit
     fi
-
+    
     if [[ $# == 0 ]]; then
         before_show_menu
     fi
@@ -115,15 +115,15 @@ config() {
     case $? in
         0)
             echo -e "XrayR状态: ${green}已运行${plain}"
-            ;;
+        ;;
         1)
             echo -e "检测到您未启动XrayR或XrayR自动重启失败，是否查看日志？[Y/n]" && echo
             read -e -rp "(默认: y):" yn
             [[ -z ${yn} ]] && yn="y"
             if [[ ${yn} == [Yy] ]]; then
-               show_log
+                show_log
             fi
-            ;;
+        ;;
         2)
             echo -e "XrayR状态: ${red}未安装${plain}"
     esac
@@ -144,11 +144,11 @@ uninstall() {
     systemctl reset-failed
     rm /etc/XrayR/ -rf
     rm /usr/local/XrayR/ -rf
-
+    
     echo ""
     echo -e "卸载成功，如果你想删除此脚本，则退出脚本后运行 ${green}rm /usr/bin/XrayR -f${plain} 进行删除"
     echo ""
-
+    
     if [[ $# == 0 ]]; then
         before_show_menu
     fi
@@ -169,7 +169,7 @@ start() {
             echo -e "${red}XrayR可能启动失败，请稍后使用 XrayR log 查看日志信息${plain}"
         fi
     fi
-
+    
     if [[ $# == 0 ]]; then
         before_show_menu
     fi
@@ -184,7 +184,7 @@ stop() {
     else
         echo -e "${red}XrayR停止失败，可能是因为停止时间超过了两秒，请稍后查看日志信息${plain}"
     fi
-
+    
     if [[ $# == 0 ]]; then
         before_show_menu
     fi
@@ -218,7 +218,7 @@ enable() {
     else
         echo -e "${red}XrayR 设置开机自启失败${plain}"
     fi
-
+    
     if [[ $# == 0 ]]; then
         before_show_menu
     fi
@@ -231,7 +231,7 @@ disable() {
     else
         echo -e "${red}XrayR 取消开机自启失败${plain}"
     fi
-
+    
     if [[ $# == 0 ]]; then
         before_show_menu
     fi
@@ -316,11 +316,11 @@ show_status() {
         0)
             echo -e "XrayR状态: ${green}已运行${plain}"
             show_enable_status
-            ;;
+        ;;
         1)
             echo -e "XrayR状态: ${yellow}未运行${plain}"
             show_enable_status
-            ;;
+        ;;
         2)
             echo -e "XrayR状态: ${red}未安装${plain}"
     esac
@@ -386,7 +386,7 @@ generate_config_file() {
         mv config.yml config.yml.bak
         cat <<EOF > /etc/XrayR/config.yml
 Log:
-  Level: warning # Log level: none, error, warning, info, debug 
+  Level: warning # Log level: none, error, warning, info, debug
   AccessPath: # /etc/XrayR/access.Log
   ErrorPath: # /etc/XrayR/error.log
 DnsConfigPath: # /etc/XrayR/dns.json # Path to dns config, check https://xtls.github.io/config/base/dns/ for help
@@ -398,7 +398,7 @@ ConnetionConfig:
   ConnIdle: 30 # Connection idle time limit, Second
   UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
   DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
-  BufferSize: 64 # The internal cache size of each connection, kB 
+  BufferSize: 64 # The internal cache size of each connection, kB
 Nodes:
   -
     PanelType: "$PanelType" # Panel type: SSpanel, V2board, PMpanel, Proxypanel
@@ -504,15 +504,15 @@ show_menu() {
  ${green}10.${plain} 取消 XrayR 开机自启
 ————————————————
  ${green}11.${plain} 一键安装 bbr (最新内核)
- ${green}12.${plain} 查看 XrayR 版本 
+ ${green}12.${plain} 查看 XrayR 版本
  ${green}13.${plain} 升级 XrayR 维护脚本
  ${green}14.${plain} 生成 XrayR 配置文件
  ${green}15.${plain} 放行 VPS 的所有网络端口
- "
- #后续更新可加入上方字符串中
+    "
+    #后续更新可加入上方字符串中
     show_status
     echo && read -rp "请输入选择 [0-14]: " num
-
+    
     case "${num}" in
         0) config ;;
         1) check_uninstall && install ;;
